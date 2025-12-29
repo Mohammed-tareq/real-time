@@ -5,10 +5,10 @@
 
     <ul class="nav">
 
-        <li class="nav-item nav-notif">
-            <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
+        <li class="nav-item nav-notif ">
+            <a class="nav-link text-muted my-2 notificationIcon" href="./#" data-toggle="modal" data-target=".modal-notif">
                 <span class="fe fe-bell fe-16"></span>
-                <span class="dot dot-md text-danger">{{ count(Auth::guard('admin')->user()->unreadNotifications) }}</span>
+                <span class="dot dot-md text-danger" id="notificationIconCount">{{ count(Auth::guard('admin')->user()->unreadNotifications) }}</span>
             </a>
         </li>
 
@@ -23,8 +23,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-
+                    <div class="modal-body" id="notificationSectionModel">
                         @forelse(Auth::guard('admin')->user()->notifications as $notification)
                         <div class="list-group list-group-flush my-n3">
                             <div class="list-group-item {{ is_null($notification->read_at) ? 'bg-light' : 'bg-transparent' }}">

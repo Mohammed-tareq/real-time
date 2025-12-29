@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminProfileController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         ##------------------------------------------------------- ADMIN INDEX PAGE
         Route::get('/', AdminHomeController::class)->name('index');
-        
+        Route::get('/notifictions', function () {
+            $admin = Auth::guard('admin')->user();
+            $admin->unreadNotifications->markAsRead();
+            return response()->json([
+                'count' => $admin->unreadNotifications()->count(),
+                'html'  => view('dashboard.partials.notification', [
+                    'notifications' => $admin->notifications
+                ])->render()
+            ]);
+        })->name('notifications.read');
     });
 
     require __DIR__ . '/adminAuth.php';
