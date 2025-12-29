@@ -8,7 +8,7 @@
         <li class="nav-item nav-notif">
             <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
                 <span class="fe fe-bell fe-16"></span>
-                <span class="dot dot-md bg-success"></span>
+                <span class="dot dot-md text-danger">{{ count(Auth::guard('admin')->user()->unreadNotifications) }}</span>
             </a>
         </li>
 
@@ -24,9 +24,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @foreach(Auth::guard('admin')->user()->notifications as $notification)
+
+                        @forelse(Auth::guard('admin')->user()->notifications as $notification)
                         <div class="list-group list-group-flush my-n3">
-                            <div class="list-group-item bg-transparent">
+                            <div class="list-group-item {{ is_null($notification->read_at) ? 'bg-light' : 'bg-transparent' }}">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
                                         <span class="fe fe-box fe-24"></span>
@@ -39,7 +40,9 @@
                                 </div>
                             </div>
                         </div> <!-- / .row -->
-                        @endforeach
+                        @empty
+                        <p class="text-center">No new notifications</p>
+                        @endforelse
 
                     </div> <!-- / .list-group -->
                     <div class="modal-footer">
