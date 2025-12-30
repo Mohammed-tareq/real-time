@@ -34,7 +34,6 @@
     $(document).ready(function() {
         $(document).on("click", ".notificationIcon", function(e) {
             e.preventDefault();
-            alert('click');
             $.ajax({
                 url: "{{ route('admin.notifications.read') }}",
                 method: 'GET',
@@ -42,9 +41,21 @@
                     $("#notificationIconCount").text(response.count);
                     $("#notificationSectionModel").html(response.html);
                 },
-                error: function() {
-                    alert('error');
-                }
+
+            });
+        });
+
+
+        $(document).on("click", "#clearNotification", function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route('admin.notifications.clear') }}",
+                method: 'GET',
+                success: function(response) {
+                  $("#notificationIconCount").text(response.count);
+                    $("#notificationSectionModel").html(response.html);
+                },
+
             });
         });
     });

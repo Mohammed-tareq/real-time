@@ -45,7 +45,7 @@
 
                     </div> <!-- / .list-group -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear
+                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal" id="clearNotification">Clear
                             All</button>
                     </div>
                 </div>

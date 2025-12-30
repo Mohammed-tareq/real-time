@@ -59,6 +59,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 ])->render()
             ]);
         })->name('notifications.read');
+
+        Route::get('/notifictions/delete', function () {
+            $admin = Auth::guard('admin')->user();
+            $admin->notifications()->delete();
+            return response()->json([
+                'count' => $admin->notifications()->count(),
+                'html'  => view('dashboard.partials.notification', [
+                    'notifications' => $admin->notifications
+                ])->render()
+            ]);
+        })->name('notifications.clear');
     });
 
     require __DIR__ . '/adminAuth.php';

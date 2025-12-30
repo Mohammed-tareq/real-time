@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\NewUserRegisterdEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\User;
@@ -49,6 +50,7 @@ class RegisteredUserController extends Controller
         $admin = Admin::first();
         $admin->notify(new NewUserRegisterNotification($user));
 
+        NewUserRegisterdEvent::dispatch($user);
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
